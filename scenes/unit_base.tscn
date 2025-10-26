@@ -1,0 +1,54 @@
+[gd_scene load_steps=10 format=3 uid="uid://djnxsve2841hd"]
+
+[ext_resource type="Texture2D" uid="uid://icor8sjs5xki" path="res://Sprites/Characters/tile_0097.png" id="1_gk1ts"]
+[ext_resource type="Script" uid="uid://bklshb3uxgi25" path="res://scripts/unit.gd" id="1_rwrny"]
+[ext_resource type="Script" uid="uid://b6xdjyn7dpv8u" path="res://scripts/unit_health_bar.gd" id="3_2k7yo"]
+[ext_resource type="Script" uid="uid://b5y8kqiu7ib10" path="res://scripts/unit_visual.gd" id="3_3igep"]
+[ext_resource type="Script" uid="uid://dxquiow6srmmq" path="res://scripts/unit_audio.gd" id="5_irtg7"]
+[ext_resource type="AudioStream" uid="uid://bgtat7u2w5j53" path="res://Audio/take_damage.wav" id="6_vam1i"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_gk1ts"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_rwrny"]
+bg_color = Color(0.1254902, 0.1254902, 0.1254902, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_2k7yo"]
+bg_color = Color(0.98039216, 0.11764706, 0.11764706, 1)
+border_width_left = 5
+border_width_top = 5
+border_width_right = 5
+border_width_bottom = 5
+border_color = Color(0.1254902, 0.1254902, 0.1254902, 1)
+
+[node name="Unit_Base" type="Area2D" groups=["Unit"]]
+script = ExtResource("1_rwrny")
+
+[node name="Sprite" type="Sprite2D" parent="."]
+position = Vector2(0, 8)
+texture = ExtResource("1_gk1ts")
+offset = Vector2(0, -8)
+script = ExtResource("3_3igep")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 1)
+shape = SubResource("CircleShape2D_gk1ts")
+
+[node name="NavigationAgent2D" type="NavigationAgent2D" parent="."]
+path_desired_distance = 5.0
+target_desired_distance = 5.0
+
+[node name="HealthBar" type="ProgressBar" parent="."]
+offset_left = -9.999999
+offset_top = -13.999999
+offset_right = 190.0
+offset_bottom = 26.0
+scale = Vector2(0.1, 0.1)
+theme_override_styles/background = SubResource("StyleBoxFlat_rwrny")
+theme_override_styles/fill = SubResource("StyleBoxFlat_2k7yo")
+value = 60.0
+show_percentage = false
+script = ExtResource("3_2k7yo")
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+script = ExtResource("5_irtg7")
+take_damage_sfx = ExtResource("6_vam1i")
